@@ -2,7 +2,7 @@
 The purpose of this code is to offer a statistical method to **analyze contingency tables and their residuals**.
 
 ##### Table of Contents  
-- [Intro](#introduction-and-motivation)  
+- [Intro and motivation](#introduction-and-motivation)  
 - [Usage example](#usage-example)
 - [Requirements](#requirements)
 - [Some pitfalls](#pitfalls)
