@@ -1,5 +1,11 @@
 # ACT: Analysis of Contingency Tables
-The purpose of this code is to offer a method to **analyze contingency tables and their residuals**.
+The purpose of this code is to offer a statistical method to **analyze contingency tables and their residuals**.
+
+##### Table of Contents  
+[Intro](#introduction-and-motivation)  
+[To check](#to-check-before-using-actpy)
+[Usage example](#usage-example)
+[Development roadmap](#development-roadmap)
 
 ## Introduction and motivation
 This is an implementation of the method "Analysis of Contingency Tables" presented in García-Pérez, M.A., Núñez-Antón, V. & Alcalá-Quintana, R. *Analysis of residuals in contingency tables: Another nail in the coffin of conditional approaches to significance testing*. Behav Res 47, 147–161 (2015). https://doi.org/10.3758/s13428-014-0472-0. (NB.: I have no connection to the authors.)
