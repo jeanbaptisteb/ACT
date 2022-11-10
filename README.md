@@ -2,10 +2,11 @@
 The purpose of this code is to offer a statistical method to **analyze contingency tables and their residuals**.
 
 ##### Table of Contents  
-[Intro](#introduction-and-motivation)  
-[To check](#to-check-before-using-actpy)
-[Usage example](#usage-example)
-[Development roadmap](#development-roadmap)
+- [Intro](#introduction-and-motivation)  
+- [Usage example](#usage-example)
+- [Requirements](#requirements)
+- [Some pitfalls](#pitfalls)
+- [Development roadmap](#development-roadmap)
 
 ## Introduction and motivation
 This is an implementation of the method "Analysis of Contingency Tables" presented in García-Pérez, M.A., Núñez-Antón, V. & Alcalá-Quintana, R. *Analysis of residuals in contingency tables: Another nail in the coffin of conditional approaches to significance testing*. Behav Res 47, 147–161 (2015). https://doi.org/10.3758/s13428-014-0472-0. (NB.: I have no connection to the authors.)
@@ -13,16 +14,6 @@ This is an implementation of the method "Analysis of Contingency Tables" present
 The method avoids losing control of type I error rates, which typically happens with the very common method "performing an omnibus test first (e.g. a chi-square test of independence), and if the test is significant, analyzing the residuals". García-Pérez et al. explain in their paper why it should be avoided, and mention possible remedies.
 
 There are more complete implementations of their method available in R and Matlab, developed by García-Pérez et al., and available for download here: https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-014-0472-0/MediaObjects/13428_2014_472_MOESM1_ESM.zip
-
-## To check before using ACT.py
-For the moment, the Python code available here only implements García-Pérez et al.'s method for testing independence. Moreover, it does not implement various "safety checks" the original authors use in their own code. So, until implemented here, you should take care of:
- - using a two-way contingency table;
- - using an alpha level $a$ where $0 < a \leqslant 0.05 $
- - using more than 1,000 replicates for the bootstrap (the authors recommend at least 30,000).
- - not using a table containing NaNs;
- - not using a table with empty rows or columns (i.e. summing to zero);
-
-Numpy, scipy, and statsmodels are required to use the code, though the versions of these packages mentioned in the requirements.txt file are not set in stone. I have not tested the code against various versions of these packages -yet I guess it is quite likely to work with more recent versions, and probably with some older versions as well.
 
 ## Usage example
 Using the ```ACT_I``` function available in the ```ACT.py``` file:
@@ -84,6 +75,17 @@ Output:
  'Famwise_ExactTestSize': 0.05002,
  'OmnibusHypothesis': 'Not rejected'}
  ```
+## Requirements
+Numpy, scipy, and statsmodels are required to use the code, though the versions of these packages mentioned in the requirements.txt file are not set in stone. I have not tested the code against various versions of these packages -yet I guess it is quite likely to work with more recent versions, and probably with some older versions as well.
+
+## Pitfalls
+For the moment, the Python code available here only implements García-Pérez et al.'s method for testing independence. Moreover, it does not implement various "safety checks" the original authors use in their own code. So, until implemented here, you should take care of:
+ - using a two-way contingency table;
+ - using an alpha level $a$ where $0 < a \leqslant 0.05 $
+ - using more than 1,000 replicates for the bootstrap (the authors recommend at least 30,000).
+ - not using a table containing NaNs;
+ - not using a table with empty rows or columns (i.e. summing to zero);
+
 
 ## Development roadmap
 
