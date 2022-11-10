@@ -1,5 +1,5 @@
 # ACT: Analysis of Contingency Tables
-The purpose of this code is to offer a statistical method to **analyze contingency tables and their residuals**.
+The purpose of this code is to offer a statistical method to **analyze contingency tables and their residuals**, with a bootstrap correction for multiple testing.
 
 ##### Table of Contents  
 - [Intro and motivation](#introduction-and-motivation)  
