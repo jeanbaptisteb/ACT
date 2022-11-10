@@ -13,8 +13,7 @@ This is a Python implementation of the method "Analysis of Contingency Tables" p
 
 The method avoids losing control of type I error rates, which typically happens with the very common method "performing an omnibus test on the contingency table first, and if the test is significant, analyzing the residuals". García-Pérez et al. explain in their paper why it should be avoided, and suggest the "ACT" method as a possible remedy.
 
-### Other implementations
-There are other implementations of this method, developed by García-Pérez et al. in R and Matlab, and available for download here: https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-014-0472-0/MediaObjects/13428_2014_472_MOESM1_ESM.zip
+Note that there are other implementations of this method, developed by García-Pérez et al. for R and Matlab, and available for download here: https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-014-0472-0/MediaObjects/13428_2014_472_MOESM1_ESM.zip
 
 ## Usage example
 Using the ```ACT_I``` function available in the ```ACT.py``` file:
@@ -34,7 +33,7 @@ result = ACT_I(observed, alpha_level, residual_type, n_bootstrap)
 print(result)
 ```
 
-It returns a dictionary, formatted according to the convention used in the R implementation of this method. For a standard usage, the values of direct interest will generally be **Famwise_Significant** and **OmnibusHypothesis**. The documentation attached to the R and Matlab code gives additional useful information about the output (see [this link](https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-014-0472-0/MediaObjects/13428_2014_472_MOESM1_ESM.zip)).
+It returns a dictionary, formatted according to the convention used in the R implementation of this method. For a standard use, the values of direct interest will generally be **Famwise_Significant** and **OmnibusHypothesis**. The documentation attached to the R and Matlab code gives additional useful information about the output (see [this link](https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-014-0472-0/MediaObjects/13428_2014_472_MOESM1_ESM.zip)).
 
 Output:
 ```
