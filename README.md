@@ -81,10 +81,10 @@ Numpy, scipy, and statsmodels are required to use the code, though the versions 
 ## Pitfalls
 For the moment, the Python code available here only implements García-Pérez et al.'s method for testing independence. Moreover, it does not implement various "safety checks" the original authors use in their own code. So, until implemented here, you should take care of:
  - using a two-way contingency table;
- - using an alpha level $a$ where $0 < a \leqslant 0.05 $
- - using more than 1,000 replicates for the bootstrap (the authors recommend at least 30,000).
+ - using an alpha level $a$ where $0 < a \leqslant 0.05 $;
+ - using more than 1,000 replicates for the bootstrap (the authors recommend at least 30,000).;
  - not using a table containing NaNs;
- - not using a table with empty rows or columns (i.e. summing to zero);
+ - not using a table with empty rows or columns (i.e. summing to zero).
 
 
 ## Development roadmap
@@ -92,5 +92,5 @@ For the moment, the Python code available here only implements García-Pérez et
 - automatically checking the validity of inputs
 - adding support for tests of homogeneity and tests of fit
 - improving documentation
-- making it available as a package on pipy
+- making it available as a package on pypi
 - generating better formatted reports
