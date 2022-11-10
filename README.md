@@ -36,7 +36,8 @@ print(result)
 It returns a dictionary, formatted according to the convention used in the R implementation of this method. For a standard usage, the values of direct interest will generally be **Famwise_Significant** and **OmnibusHypothesis**. The documentation attached to the R and Matlab code gives additional useful information about the output (see [this link](https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-014-0472-0/MediaObjects/13428_2014_472_MOESM1_ESM.zip)).
 
 Output:
-```{'Problem': 'Omnibus test of independence and ADJ residual analysis',
+```
+{'Problem': 'Omnibus test of independence and ADJ residual analysis',
  'InputTable': array([[ 1,  7, 15, 12, 12, 14],
         [ 1, 16, 22, 31, 32, 27],
         [ 7, 14, 25, 28, 46, 44],
@@ -73,9 +74,11 @@ Output:
         [False, False, False, False, False, False],
         [False, False, False, False, False, False]]),
  'Famwise_ExactTestSize': 0.05002,
- 'OmnibusHypothesis': 'Not rejected'}```
+ 'OmnibusHypothesis': 'Not rejected'}
+ ```
 
 ## Development roadmap
+
 - automatically checking the validity of inputs
 - adding support for tests of homogeneity and tests of fit
 - improving documentation
