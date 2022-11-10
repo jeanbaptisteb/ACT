@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+"""Python implementation of the method presented in García-Pérez, M.A., Núñez-Antón, V. & Alcalá-Quintana, R. 
+*Analysis of residuals in contingency tables: Another nail in the coffin of conditional approaches to significance testing*. 
+Behav Res 47, 147–161 (2015). 
+https://doi.org/10.3758/s13428-014-0472-0. """
+
 import scipy
 import statsmodels.api as sm
 import numpy as np
