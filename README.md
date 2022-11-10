@@ -1,14 +1,14 @@
 # ACT: Analysis of Contingency Tables
 The purpose of this code is to offer a method to **analyze contingency tables and their residuals**.
 
-##Introduction and motivation
+## Introduction and motivation
 This is an implementation of the method "Analysis of Contingency Tables" presented in García-Pérez, M.A., Núñez-Antón, V. & Alcalá-Quintana, R. *Analysis of residuals in contingency tables: Another nail in the coffin of conditional approaches to significance testing*. Behav Res 47, 147–161 (2015). https://doi.org/10.3758/s13428-014-0472-0. (NB.: I have no connection to the authors.)
 
 The method avoids losing control of type I error rates, which typically happens with the very common method "performing an omnibus test first (e.g. a chi-square test of independence), and if the test is significant, analyzing the residuals". García-Pérez et al. explain in their paper why it should be avoided, and mention possible remedies.
 
 There are more complete implementations of their method available in R and Matlab, developed by García-Pérez et al., and available for download here: https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-014-0472-0/MediaObjects/13428_2014_472_MOESM1_ESM.zip
 
-##To check before using ACT.py
+## To check before using ACT.py
 For the moment, the Python code available here only implements García-Pérez et al.'s method for testing independence. Moreover, it does not implement various "safety checks" the original authors use in their own code. So, until implemented here, you should take care of:
  - using a two-way contingency table;
  - using an alpha level $a$ where $0 < a \leqslant 0.05 $
