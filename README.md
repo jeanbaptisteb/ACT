@@ -9,7 +9,7 @@ The purpose of this code is to offer a statistical method to **analyze contingen
 - [Development roadmap](#development-roadmap)
 
 ## Introduction and motivation
-This is an implementation of the method "Analysis of Contingency Tables" presented in García-Pérez, M.A., Núñez-Antón, V. & Alcalá-Quintana, R. *Analysis of residuals in contingency tables: Another nail in the coffin of conditional approaches to significance testing*. Behav Res 47, 147–161 (2015). https://doi.org/10.3758/s13428-014-0472-0. (NB: I have no connection to the authors.)
+This is a Python implementation of the method "Analysis of Contingency Tables" presented in García-Pérez, M.A., Núñez-Antón, V. & Alcalá-Quintana, R. *Analysis of residuals in contingency tables: Another nail in the coffin of conditional approaches to significance testing*. Behav Res 47, 147–161 (2015). https://doi.org/10.3758/s13428-014-0472-0. (NB: I have no connection to the authors.)
 
 The method avoids losing control of type I error rates, which typically happens with the very common method "performing an omnibus test on the contingency table first, and if the test is significant, analyzing the residuals". García-Pérez et al. explain in their paper why it should be avoided, and suggest the "ACT" method as a possible remedy.
 
