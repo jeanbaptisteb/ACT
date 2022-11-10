@@ -14,8 +14,11 @@ For the moment, the Python code available here only implements their method for 
  - not using a table containing NaNs;
  - not using a table with empty rows or columns (i.e. summing to zero);
 
- 
-**Usage example**
+Numpy, scipy, and statsmodels are required to use the code, though the versions of these packages mentioned in the requirements.txt file are not set in stone. I have not tested the code against various versions of these packages -yet I guess it is quite likely to work with more recent versions, and probably with some older versions as well.
+
+## Usage example
+Using the ```ACT_I``` function available in the ```ACT.py``` file:
+
 ```
 import numpy as np
 observed = np.array([[ 1 , 7, 15, 12, 12, 14],
@@ -71,3 +74,10 @@ Output:
         [False, False, False, False, False, False]]),
  'Famwise_ExactTestSize': 0.05002,
  'OmnibusHypothesis': 'Not rejected'}```
+
+## Development roadmap
+- automatically checking the validity of inputs
+- adding support for tests of homogeneity and tests of fit
+- improving documentation
+- making it available as a package on pipy
+- generating better formatted reports
