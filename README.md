@@ -91,7 +91,6 @@ For the moment, the Python code available here only implements García-Pérez et
 
 ## Development roadmap
 
-- automatically checking the validity of inputs
 - adding support for tests of homogeneity and tests of fit
 - improving documentation
 - making it available as a package on pypi
