@@ -9,6 +9,7 @@ import statsmodels.api as sm
 import numpy as np
 from warnings import warn
 def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000):
+    #TODO: implement various checks for the inputs    
     #check the input table for possible errors
     if isinstance(observed, np.ndarray) == False:
         raise  TypeError("'observed' must be a numpy array")
@@ -16,6 +17,8 @@ def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000):
         raise  ValueError("The contingency table is not a two-way table")
     if np.isnan(observed).any():
         raise ValueError("The contingency table cannot contain missing values")
+    if 0 in observed.sum(axis=0) or 0 in observed.sum(axis=1):
+        raise ValueError("The table cannot have empty rows or columns")
     #check the other parameters
     if Rtype.lower() not in ["adj", "mc"]:
         raise  ValueError("""Invalid type of residuals: 'Rtype' must be 'MC' for 'moment corrected residuals'
@@ -29,12 +32,11 @@ def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000):
     
     #warnings
     if nrep < 30000:
-        warn("Consider using at least 30,000 replicates", stacklevel=2)        
+        warn("Consider using at least 30,000 replicates", stacklevel=2)
+        
     if (np.product(observed.shape) * nrep) <1000:
         warn("consider increasing the number of replicates to at least "+str(round((1000/np.product(observed.shape))+1, 0)) + " to get enough valid replicates",
              stacklevel=2)
-    
-    #now the algorithm
     nfil, ncolumn = observed.shape
     margin_col = observed.sum(axis=0)
     margin_row = observed.sum(axis=1).reshape(-1,1)
@@ -42,7 +44,7 @@ def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000):
     table = sm.stats.Table(observed)
     expected = table.fittedvalues
     probabilities = table.independence_probabilities # expected/n
-    if Rtype in ['ADJ', "adj"]:
+    if Rtype=='ADJ':
         variances = (1-margin_row/n)*(1-margin_col/n)
         residuals = table.standardized_resids
     else:
