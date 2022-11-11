@@ -81,7 +81,7 @@ The function returns a dictionary, formatted according to the convention used in
 
 **TL;DR**
 
-For a standard use, the values of direct interest will generally be **Famwise_Significant** and **OmnibusHypothesis**. The **Famwise_Significant** value is an array, showing which cells have significant residuals (`True`)  or non-significant residuals (`False`). The  **OmnibusHypothesis** value say if we can reject (or not) the null hypothesis. The example above says that none of the residuals is significant, and that the omnibus test is non-significant (so we cannot reject the null hypothesis).
+For a standard use, the values of direct interest will generally be **Famwise_Significant** and **OmnibusHypothesis**. The **Famwise_Significant** value is an array, showing which cells have significant residuals (`True`)  or non-significant residuals (`False`). The  **OmnibusHypothesis** value shows if we can reject (or not) the null hypothesis. The example above shows that none of the residuals is significant, and that the omnibus test is non-significant (so we cannot reject the null hypothesis).
 
 **Detailed explanation of the output**
 
