@@ -30,7 +30,8 @@ observed = np.array([[ 1 , 7, 15, 12, 12, 14],
 alpha_level = 0.05 #should always be > 0 and <0.5. default 0.05
 residual_type = "ADJ" #‘ADJ’ for adjusted residuals, "MC" for moment-corrected residuals. Default "ADJ".
 n_bootstrap = 50000 #number of replicates to generate during bootstrapping, García-Pérez et al. recommend a number of 30,000 at least, which is the default value specified when calling the function.
-result = ACT_I(observed, alpha_level, residual_type, n_bootstrap)
+
+result = ACT_I(observed, alpha=alpha_level, Rtype=residual_type, nrep=n_bootstrap)
 print(result)
 ```
 
