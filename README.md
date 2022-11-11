@@ -108,7 +108,7 @@ The documentation attached to the R and Matlab code developed by García-Pérez 
 ## Requirements
 Developed with Python 3.10.4. No tests have been performed against other versions of Python, though support for ulterior versions is on the roadmap.
 
-Numpy, scipy, and statsmodels are required to use the code, though the versions of these packages mentioned in the [requirements.txt](https://github.com/jeanbaptisteb/ACT/blob/main/requirements.txt) file are not set in stone. The code hasn't been tested against various versions of these packages -yet it is quite likely to work with more recent versions, and probably with some older versions as well.
+Numpy, scipy, and statsmodels are required, though the versions of these packages mentioned in the [requirements.txt](https://github.com/jeanbaptisteb/ACT/blob/main/requirements.txt) file are not set in stone. The code hasn't been tested against various versions of these packages -yet it is quite likely to work with more recent versions, and probably with some older versions as well.
 
 ## Limitations
 For the moment, the Python code available here only implements García-Pérez et al.'s method for testing independence, not the other tests they mention (homogeneity...).
