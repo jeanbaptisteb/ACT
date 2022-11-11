@@ -86,7 +86,7 @@ For a standard use, the values of direct interest will generally be **Famwise_Si
 
 **Detailed explanation of the output**
 
-- Problem:  Description of the analysis, mentionning the type of residuals defined in the Rtype parameter.
+- Problem:  Description of the analysis, mentioning the type of residuals defined in the Rtype parameter.
 - InputTable: The array passed in the 'observed'  parameter.
 - NominalTestSize: The alpha level defined in the 'alpha' parameter.
 - NumReplicates: Number of replicates generated, defined by the 'nrep' parameter.
@@ -106,7 +106,9 @@ The documentation attached to the R and Matlab code developed by García-Pérez 
 
  
 ## Requirements
-Numpy, scipy, and statsmodels are required to use the code, though the versions of these packages mentioned in the requirements.txt file are not set in stone. The code hasn't been tested against various versions of these packages -yet it is quite likely to work with more recent versions, and probably with some older versions as well.
+Developed with Python 3.10.4. No tests have been performed against other versions of Python, though support for ulterior versions is on the roadmap.
+
+Numpy, scipy, and statsmodels are required to use the code, though the versions of these packages mentioned in the [requirements.txt](https://github.com/jeanbaptisteb/ACT/blob/main/requirements.txt) file are not set in stone. The code hasn't been tested against various versions of these packages -yet it is quite likely to work with more recent versions, and probably with some older versions as well.
 
 ## Limitations
 For the moment, the Python code available here only implements García-Pérez et al.'s method for testing independence, not the other tests they mention (homogeneity...).
@@ -115,5 +117,8 @@ For the moment, the Python code available here only implements García-Pérez et
 
 - adding support for tests of homogeneity and tests of fit
 - improving documentation
+- testing support for Python > 3.10.4
+- testing support for numpy > 1.22.0, scipy > 1.8.0, statsmodels > 0.13.2
 - making it available as a package on pypi
-- generating better formatted reports (heatmaps, etc.)
+- generating better formatted reports? (heatmaps, pdf, etc.)
+
