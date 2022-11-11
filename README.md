@@ -2,36 +2,39 @@
 The purpose of this code is to offer a statistical method to **analyze contingency tables and their residuals**, with a bootstrap correction for multiple testing.
 
 ##### Table of Contents  
-- [Intro and motivation](#introduction-and-motivation)  
+- [Motivation](#introduction-and-motivation)  
 - [Usage example](#usage-example)
 - [Interpreting the output](#interpreting-the-output)
 - [Requirements](#requirements)
 - [Limitations](#limitations)
 - [Development roadmap](#development-roadmap)
 
-## Introduction and motivation
-This is a Python implementation of the method "Analysis of Contingency Tables" presented in García-Pérez, M.A., Núñez-Antón, V. & Alcalá-Quintana, R. *Analysis of residuals in contingency tables: Another nail in the coffin of conditional approaches to significance testing*. Behav Res 47, 147–161 (2015). https://doi.org/10.3758/s13428-014-0472-0.
+## Motivation
+This is a Python implementation of the method "Analysis of Contingency Tables" (ACT) presented in García-Pérez, M.A., Núñez-Antón, V. & Alcalá-Quintana, R. *Analysis of residuals in contingency tables: Another nail in the coffin of conditional approaches to significance testing*. Behav Res 47, 147–161 (2015). https://doi.org/10.3758/s13428-014-0472-0.
 
-The method avoids losing control of type I error rates, which typically happens with the very common method "performing an omnibus test on the contingency table first, and if the test is significant, analyzing the residuals". García-Pérez et al. explain in their paper why it should be avoided, and suggest the "ACT" method as a possible remedy.
+The ACT method avoids losing control of type I error rates, which typically happens with the very common method "performing an omnibus test on the contingency table first, and if the test is significant, analyzing the residuals". García-Pérez et al. explain in their paper why it should be avoided, and suggest this alternative method as a possible remedy.
 
-Note that there are other implementations of this method, developed by García-Pérez et al. for R and Matlab, and available for download here: https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-014-0472-0/MediaObjects/13428_2014_472_MOESM1_ESM.zip
+Note that there are other implementations of the ACT method, developed by García-Pérez et al. for R and Matlab, and available for download here: https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-014-0472-0/MediaObjects/13428_2014_472_MOESM1_ESM.zip
 
 ## Usage example
-Using the ```ACT_I``` function available in the ```ACT.py``` file:
+The following example uses the ```ACT_I``` function available in the ```ACT.py``` file.
+The function takes 4 parameters:
+- observed: the contingency table to analyse (type: numpy array)
+- alpha: significance level. Should always be > 0 and < 0.5. Default 0.05
+- Rtype: type of residuals to use in the analysis. "ADJ" for adjusted residuals, "MC" for moment-corrected residuals. Default "ADJ".
+- nrep: number of replicates to generate during bootstrapping. Default 30000, as recommended by García-Pérez et al.
+
 
 ```
 import numpy as np
 #here is our contingency table
-observed = np.array([[ 1 , 7, 15, 12, 12, 14],
+observed = np.array(
+                 [[ 1 , 7, 15, 12, 12, 14],
                   [ 1, 16, 22, 31, 32, 27],
                   [ 7, 14, 25, 28, 46, 44],
                   [13, 19, 34, 45, 63, 72]]
                ) 
-alpha_level = 0.05 #should always be > 0 and <0.5. default 0.05
-residual_type = "ADJ" #‘ADJ’ for adjusted residuals, "MC" for moment-corrected residuals. Default "ADJ".
-n_bootstrap = 50000 #number of replicates to generate during bootstrapping, García-Pérez et al. recommend a number of 30,000 at least, which is the default value specified when calling the function.
-
-result = ACT_I(observed, alpha=alpha_level, Rtype=residual_type, nrep=n_bootstrap)
+result = ACT_I(observed, alpha=0.05 , Rtype="ADJ" , nrep=50000)
 print(result)
 ```
 
