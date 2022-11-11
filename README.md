@@ -33,9 +33,7 @@ result = ACT_I(observed, alpha_level, residual_type, n_bootstrap)
 print(result)
 ```
 
-It returns a dictionary, formatted according to the convention used in the R implementation of this method. For a standard use, the values of direct interest will generally be **Famwise_Significant** and **OmnibusHypothesis**. The documentation attached to the R and Matlab code gives additional useful information about the output (see [this link](https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-014-0472-0/MediaObjects/13428_2014_472_MOESM1_ESM.zip)).
-
-Output:
+**Output:**
 ```
 {'Problem': 'Omnibus test of independence and ADJ residual analysis',
  'InputTable': array([[ 1,  7, 15, 12, 12, 14],
@@ -76,6 +74,15 @@ Output:
  'Famwise_ExactTestSize': 0.05002,
  'OmnibusHypothesis': 'Not rejected'}
  ```
+**Interpreting the output:**
+
+The function returns a dictionary, formatted according to the convention used in the R implementation of this method. 
+
+For a standard use, the values of direct interest will generally be **Famwise_Significant** and **OmnibusHypothesis**. The **Famwise_Significant** value is an array, showing which cells have significant residuals (`True`)  or non-significant residuals (`False`). The  **OmnibusHypothesis** value say if we can reject (or not) the null hypothesis. The example above says that none of the residuals is significant, and that the omnibus test is non-significant (so we cannot reject the null hypothesis).
+
+The documentation attached to the R and Matlab code developed by García-Pérez et al. gives additional useful information about the output (see [this link](https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-014-0472-0/MediaObjects/13428_2014_472_MOESM1_ESM.zip)).
+
+ 
 ## Requirements
 Numpy, scipy, and statsmodels are required to use the code, though the versions of these packages mentioned in the requirements.txt file are not set in stone. I have not tested the code against various versions of these packages -yet I guess it is quite likely to work with more recent versions, and probably with some older versions as well.
 
