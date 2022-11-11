@@ -10,7 +10,7 @@ The purpose of this code is to offer a statistical method to **analyze contingen
 - [Development roadmap](#development-roadmap)
 
 ## Introduction and motivation
-This is a Python implementation of the method "Analysis of Contingency Tables" presented in García-Pérez, M.A., Núñez-Antón, V. & Alcalá-Quintana, R. *Analysis of residuals in contingency tables: Another nail in the coffin of conditional approaches to significance testing*. Behav Res 47, 147–161 (2015). https://doi.org/10.3758/s13428-014-0472-0. (NB: I have no connection to the authors.)
+This is a Python implementation of the method "Analysis of Contingency Tables" presented in García-Pérez, M.A., Núñez-Antón, V. & Alcalá-Quintana, R. *Analysis of residuals in contingency tables: Another nail in the coffin of conditional approaches to significance testing*. Behav Res 47, 147–161 (2015). https://doi.org/10.3758/s13428-014-0472-0.
 
 The method avoids losing control of type I error rates, which typically happens with the very common method "performing an omnibus test on the contingency table first, and if the test is significant, analyzing the residuals". García-Pérez et al. explain in their paper why it should be avoided, and suggest the "ACT" method as a possible remedy.
 
@@ -105,7 +105,7 @@ The documentation attached to the R and Matlab code developed by García-Pérez 
 
  
 ## Requirements
-Numpy, scipy, and statsmodels are required to use the code, though the versions of these packages mentioned in the requirements.txt file are not set in stone. I have not tested the code against various versions of these packages -yet I guess it is quite likely to work with more recent versions, and probably with some older versions as well.
+Numpy, scipy, and statsmodels are required to use the code, though the versions of these packages mentioned in the requirements.txt file are not set in stone. The code hasn't been tested against various versions of these packages -yet it is quite likely to work with more recent versions, and probably with some older versions as well.
 
 ## Limitations
 For the moment, the Python code available here only implements García-Pérez et al.'s method for testing independence, not the other tests they mention (homogeneity...).
@@ -115,4 +115,4 @@ For the moment, the Python code available here only implements García-Pérez et
 - adding support for tests of homogeneity and tests of fit
 - improving documentation
 - making it available as a package on pypi
-- generating better formatted reports
+- generating better formatted reports (heatmaps, etc.)
