@@ -66,7 +66,6 @@ def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000):
     Behav Res 47, 147–161 (2015). 
     https://doi.org/10.3758/s13428-014-0472-0.
     """
-    #TODO: implement various checks for the inputs    
     #check the input table for possible errors
     if isinstance(observed, np.ndarray) == False:
         raise  TypeError("'observed' must be a numpy array")
