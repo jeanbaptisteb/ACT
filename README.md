@@ -87,10 +87,9 @@ The documentation attached to the R and Matlab code developed by García-Pérez 
 Numpy, scipy, and statsmodels are required to use the code, though the versions of these packages mentioned in the requirements.txt file are not set in stone. I have not tested the code against various versions of these packages -yet I guess it is quite likely to work with more recent versions, and probably with some older versions as well.
 
 ## Pitfalls
-For the moment, the Python code available here only implements García-Pérez et al.'s method for testing independence. Moreover, it does not implement various "safety checks" the original authors use in their own code. So, until implemented here, you should take care of:
+For the moment, the Python code available here only implements García-Pérez et al.'s method for testing independence. Moreover, it does not implement various some checks the original authors use in their own code. So, until implemented here, you should take care of:
  - using a two-way contingency table;
  - using an alpha level $a$ where $0 < a \leqslant 0.05 $;
- - using more than 1,000 replicates for the bootstrap (the authors recommend at least 30,000).;
  - not using a table containing NaNs;
  - not using a table with empty rows or columns (i.e. summing to zero).
 
