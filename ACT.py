@@ -29,7 +29,7 @@ def ACT_I(observed, alpha, Rtype, nrep):
                             probabilities.flatten(), 
                             size=nrep)
     
-    simulations = [ sim.reshape(4,6) for sim in simulations]
+    simulations = [ sim.reshape(observed.shape) for sim in simulations]
     sim_expected = [np.zeros(shape=observed.shape) for i in range(nrep)]
     sim_variances = [np.zeros(shape=observed.shape) for i in range(nrep)]
     sim_residuals = [np.zeros(shape=observed.shape) for i in range(nrep)]
