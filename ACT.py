@@ -10,6 +10,10 @@ import numpy as np
 
 def ACT_I(observed, alpha, Rtype, nrep):
     #TODO: implement various checks for the inputs    
+    if nrep < 30000:
+        print("Consider using at least 30,000 replicates")
+    if (np.product(observed.shape) * nrep) <1000:
+        print("consider increasing the number of replicates to at least "+str(round((1000/np.product(observed.shape))+1, 0)) + " to get enough valid replicates")
     nfil, ncolumn = observed.shape
     margin_col = observed.sum(axis=0)
     margin_row = observed.sum(axis=1).reshape(-1,1)
@@ -52,44 +56,66 @@ def ACT_I(observed, alpha, Rtype, nrep):
         print('Table seems to be too sparse; consider merging rows or columns')
     
     sim_residuals = [s for i, s in enumerate(sim_residuals) if toKeep[i] == True]
-    total = len(sim_residuals) 
-    if total < 1000: #TODO: to change later, to allow returning certain value even if total < 1000
-        return "You should specify a number of replicates > 1000"
+    total = 0
+    for listElem in sim_residuals:
+        total += len(listElem)                    
     zmin = scipy.stats.norm.ppf(1-alpha) 
     zmax = 10
-    for i in range(25):
-        z_omnibus = (zmax+zmin)/2
-        type1 = np.mean([True in (abs(sim) > z_omnibus) for sim in sim_residuals])
-        if type1>alpha:
-            zmin = z_omnibus
-        else:
-            zmax = z_omnibus
     z_residuals = scipy.stats.norm.ppf(1-alpha/2)
-    type1_cell = np.mean(np.absolute(sim_residuals)>z_residuals)        
-    alpha_star = 2*scipy.stats.norm.cdf(-z_omnibus)
-
-    signif_omnibus = (abs(residuals)>z_omnibus)
     signif_residual =(abs(residuals)>z_residuals)
-    if signif_omnibus.any():
-        omnibus_test = 'Rejected'
+    #check if there are enough valid replicates
+    if total > 1000:
+        for i in range(25):
+            z_omnibus = (zmax+zmin)/2
+            type1 = np.mean([True in (abs(sim) > z_omnibus) for sim in sim_residuals])
+            if type1>alpha:
+                zmin = z_omnibus
+            else:
+                zmax = z_omnibus
+        
+        type1_cell = np.mean(np.absolute(sim_residuals)>z_residuals)        
+        alpha_star = 2*scipy.stats.norm.cdf(-z_omnibus)    
+        signif_omnibus = (abs(residuals)>z_omnibus)
+        
+        if signif_omnibus.any():
+            omnibus_test = 'Rejected'
+        else:
+            omnibus_test = "Not rejected"
+        report = {"Problem": " ".join(['Omnibus test of independence and'
+                                           ,Rtype,'residual analysis']),
+                        "InputTable":  observed,
+                        "NominalTestSize":  alpha,
+                        "NumReplicates":  nrep,
+                        "ValidReplicates":  valid,
+                        "ExpectedFrequencies":  expected,
+                        "Residuals":  residuals,
+                        "Cellwise_CriticalValue":  z_residuals,
+                        "Cellwise_Significant":  signif_residual,
+                        "Cellwise_ExactTestSize":  type1_cell,                
+                        "Famwise_AlphaStar":  alpha_star,
+                        "Famwise_CriticalValue":  z_omnibus,
+                        "Famwise_Significant":  signif_omnibus,
+                        "Famwise_ExactTestSize":  type1,
+                        "OmnibusHypothesis":  omnibus_test,
+                        
+                        }
     else:
-        omnibus_test = "Not rejected"
-    #TODO: If < 1000, some value may be returned, but not all of them should not be returned
-    report = {"Problem": " ".join(['Omnibus test of independence and'
-                                       ,Rtype,'residual analysis']),
-                    "InputTable":  observed,
-                    "NominalTestSize":  alpha,
-                    "NumReplicates":  nrep,
-                    "ValidReplicates":  valid,
-                    "ExpectedFrequencies":  expected,
-                    "Residuals":  residuals,
-                    "Cellwise_CriticalValue":  z_residuals,
-                    "Cellwise_Significant":  signif_residual,
-                    "Cellwise_ExactTestSize":  type1_cell,                
-                    "Famwise_AlphaStar":  alpha_star,
-                    "Famwise_CriticalValue":  z_omnibus,
-                    "Famwise_Significant":  signif_omnibus,
-                    "Famwise_ExactTestSize":  type1,
-                    "OmnibusHypothesis":  omnibus_test
-                    }
+        report = {"Problem": " ".join(['Omnibus test of independence and'
+                                           ,Rtype,'residual analysis']),
+                        "InputTable":  observed,
+                        "NominalTestSize":  alpha,
+                        "NumReplicates":  nrep,
+                        "ValidReplicates":  valid,
+                        "ExpectedFrequencies":  expected,
+                        "Residuals":  residuals,
+                        "Cellwise_CriticalValue":  z_residuals,
+                        "Cellwise_Significant":  signif_residual,
+                        "Cellwise_ExactTestSize":  "Not computed; insufficent valid replicates",                
+                        "Famwise_AlphaStar":  "Not computed; insufficent valid replicates",
+                        "Famwise_CriticalValue":  "Not computed; insufficent valid replicates",
+                        "Famwise_Significant":  "Not computed; insufficent valid replicates",
+                        "Famwise_ExactTestSize":  "Not computed; insufficent valid replicates",
+                        "OmnibusHypothesis":  "Not computed; insufficent valid replicates",
+                        
+                        }
     return report
