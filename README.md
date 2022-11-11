@@ -4,6 +4,7 @@ The purpose of this code is to offer a statistical method to **analyze contingen
 ##### Table of Contents  
 - [Intro and motivation](#introduction-and-motivation)  
 - [Usage example](#usage-example)
+- [Interpreting the output](#interpreting-the-output)
 - [Requirements](#requirements)
 - [Limitations](#limitations)
 - [Development roadmap](#development-roadmap)
@@ -74,12 +75,32 @@ print(result)
  'Famwise_ExactTestSize': 0.05002,
  'OmnibusHypothesis': 'Not rejected'}
  ```
-**Interpreting the output:**
+## Interpreting the output
 
 The function returns a dictionary, formatted according to the convention used in the R implementation of this method. 
 
+**TL;DR**
+
 For a standard use, the values of direct interest will generally be **Famwise_Significant** and **OmnibusHypothesis**. The **Famwise_Significant** value is an array, showing which cells have significant residuals (`True`)  or non-significant residuals (`False`). The  **OmnibusHypothesis** value say if we can reject (or not) the null hypothesis. The example above says that none of the residuals is significant, and that the omnibus test is non-significant (so we cannot reject the null hypothesis).
 
+**Detailed explanation of the output**
+
+- Problem:  Description of the analysis, mentionning the type of residuals defined in the Rtype parameter.
+- InputTable: The array passed in the 'observed'  parameter.
+- NominalTestSize: The alpha level defined in the 'alpha' parameter.
+- NumReplicates: Number of replicates generated, defined by the 'nrep' parameter.
+- ValidReplicates: Number of valid replicates. Invalid replicates may appear when the input table is too sparse, ending up with empty rows or columns. This kind of table is excluded from the analysis. A remedy may be to merge some rows or columns in the original table.
+- ExpectedFrequencies: Expected cell frequencies under independence.
+- Residuals: Cell residuals. Use statsmodels adjusted residuals when Rtype is 'ADJ' (statsmodels.stats.contingency_tables.Table.standardized_resids)
+- Cellwise_CriticalValue: Critical value used in cellwise significance tests of residuals.
+- Cellwise_Significant: a two-dimensional array of booleans, indicating which residuals are significant in cellwise tests (True == significant, False == non-significant)
+- Cellwise_ExactTestSize: [TODO]
+- Famwise_AlphaStar: Value of α* for familywise tests, defined through bootstraping
+- Famwise_CriticalValue: Critical value to be used in the familywise significance test
+- **Famwise_Significant**: Two-dimensional array of booleans, indicating which residuals are significant (or not) for the familywise test (True == significant, False == non-significant)
+- Famwise_ExactTestSize: [TODO]
+- **OmnibusHypothesis**: 'Rejected' or 'Not rejected'. Answers the question 'Is the omnibus hypothesis rejected?'. It is rejected if at least one item of Famwise_Significant is True.
+    
 The documentation attached to the R and Matlab code developed by García-Pérez et al. gives additional useful information about the output (see [this link](https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-014-0472-0/MediaObjects/13428_2014_472_MOESM1_ESM.zip)).
 
  
