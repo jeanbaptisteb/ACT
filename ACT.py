@@ -7,13 +7,34 @@ https://doi.org/10.3758/s13428-014-0472-0. """
 import scipy
 import statsmodels.api as sm
 import numpy as np
-
-def ACT_I(observed, alpha, Rtype, nrep):
-    #TODO: implement various checks for the inputs    
+from warnings import warn
+def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000):
+    #check the input table for possible errors
+    if isinstance(observed, np.ndarray) == False:
+        raise  TypeError("'observed' must be a numpy array")
+    if len(observed.shape) > 2 or np.size(observed) < 4:
+        raise  ValueError("The contingency table is not a two-way table")
+    if np.isnan(observed).any():
+        raise ValueError("The contingency table cannot contain missing values")
+    #check the other parameters
+    if Rtype.lower() not in ["adj", "mc"]:
+        raise  ValueError("""Invalid type of residuals: 'Rtype' must be 'MC' for 'moment corrected residuals'
+               or 'ADJ' for 'adjusted residuals'""")    
+    if (isinstance(alpha, float) == False) or alpha <= 0 or alpha > 0.05:
+        raise  ValueError('Invalid alpha (0 < alpha <= 0.5)')
+    if isinstance(nrep, float):
+        nrep = int(nrep)
+    elif isinstance(nrep, int) == False or nrep < 0:
+        raise  ValueError("nrep must be a positive integer")
+    
+    #warnings
     if nrep < 30000:
-        print("Consider using at least 30,000 replicates")
+        warn("Consider using at least 30,000 replicates", stacklevel=2)        
     if (np.product(observed.shape) * nrep) <1000:
-        print("consider increasing the number of replicates to at least "+str(round((1000/np.product(observed.shape))+1, 0)) + " to get enough valid replicates")
+        warn("consider increasing the number of replicates to at least "+str(round((1000/np.product(observed.shape))+1, 0)) + " to get enough valid replicates",
+             stacklevel=2)
+    
+    #now the algorithm
     nfil, ncolumn = observed.shape
     margin_col = observed.sum(axis=0)
     margin_row = observed.sum(axis=1).reshape(-1,1)
@@ -21,7 +42,7 @@ def ACT_I(observed, alpha, Rtype, nrep):
     table = sm.stats.Table(observed)
     expected = table.fittedvalues
     probabilities = table.independence_probabilities # expected/n
-    if Rtype=='ADJ':
+    if Rtype in ['ADJ', "adj"]:
         variances = (1-margin_row/n)*(1-margin_col/n)
         residuals = table.standardized_resids
     else:
@@ -51,14 +72,12 @@ def ACT_I(observed, alpha, Rtype, nrep):
     toKeep = np.isfinite([r.sum() for r in sim_residuals])
     valid = len(toKeep)
     if valid==0 :
-        return 'Table is too sparse to produce valid replicates; consider merging rows or columns'
+        raise ValueError('Table is too sparse to produce valid replicates; consider merging rows or columns')
     elif valid <= nrep/2:
-        print('Table seems to be too sparse; consider merging rows or columns')
+        warn('Table seems to be too sparse; consider merging rows or columns')
     
     sim_residuals = [s for i, s in enumerate(sim_residuals) if toKeep[i] == True]
-    total = 0
-    for listElem in sim_residuals:
-        total += len(listElem)                    
+    total = np.size(sim_residuals)    
     zmin = scipy.stats.norm.ppf(1-alpha) 
     zmax = 10
     z_residuals = scipy.stats.norm.ppf(1-alpha/2)
