@@ -9,7 +9,7 @@ import statsmodels.api as sm
 import numpy as np
 from warnings import warn
 
-def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000):    
+def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000, seed=0):    
     """
     Testing a contingency table and its residuals for independence.
     
@@ -23,13 +23,17 @@ def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000):
         One of 'ADJ' (for adjusted residuals) or 'MC' (for moment-corrected residuals)
     nrep: int, default 30000
         Number of replicates to generate in the bootstrap procedure. Must be > 0. nrep >= 30000 is recommended.
-    
+    seed: int, default 0
+        seed passed to the numpy random generator used to generate simulated tables. Allows replicating the results.
+        
     Returns
     ----------
     dict
         returns a dictionary with the following keys:
             - Problem: str
                 Description of the analysis, mentionning the type of residuals defined in the Rtype parameter
+            - seed: int
+                The seed passed in the 'seed parameter'
             - InputTable: numpy.array
                 The array passed in the 'observed'  parameter.
             - NominalTestSize: float
@@ -65,7 +69,7 @@ def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000):
     *Analysis of residuals in contingency tables: Another nail in the coffin of conditional approaches to significance testing*. 
     Behav Res 47, 147–161 (2015). 
     https://doi.org/10.3758/s13428-014-0472-0.
-    """
+    """   
     #check the input table for possible errors
     if isinstance(observed, np.ndarray) == False:
         raise  TypeError("'observed' must be a numpy array")
@@ -107,7 +111,7 @@ def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000):
         variances = np.zeros(shape=observed.shape)
         variances.fill( (ncolumn-1)*(nfil-1)/(ncolumn*nfil) )
         residuals = (observed-expected)/np.sqrt(expected*variances) 
-    rng = np.random.default_rng()
+    rng = np.random.default_rng(seed=seed)
     simulations = rng.multinomial(n, 
                             probabilities.flatten(), 
                             size=nrep)
@@ -159,6 +163,7 @@ def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000):
             omnibus_test = "Not rejected"
         report = {"Problem": " ".join(['Omnibus test of independence and'
                                            ,Rtype,'residual analysis']),
+                  "seed":seed,
                         "InputTable":  observed,
                         "NominalTestSize":  alpha,
                         "NumReplicates":  nrep,
@@ -177,6 +182,7 @@ def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000):
     else:
         report = {"Problem": " ".join(['Omnibus test of independence and'
                                            ,Rtype,'residual analysis']),
+                  "seed":seed,
                         "InputTable":  observed,
                         "NominalTestSize":  alpha,
                         "NumReplicates":  nrep,
