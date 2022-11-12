@@ -163,7 +163,7 @@ def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000, seed=0):
             omnibus_test = "Not rejected"
         report = {"Problem": " ".join(['Omnibus test of independence and'
                                            ,Rtype,'residual analysis']),
-                  "seed":seed,
+                  "Seed":seed,
                         "InputTable":  observed,
                         "NominalTestSize":  alpha,
                         "NumReplicates":  nrep,
@@ -182,7 +182,7 @@ def ACT_I(observed, alpha=0.05, Rtype="ADJ", nrep=30000, seed=0):
     else:
         report = {"Problem": " ".join(['Omnibus test of independence and'
                                            ,Rtype,'residual analysis']),
-                  "seed":seed,
+                  "Seed":seed,
                         "InputTable":  observed,
                         "NominalTestSize":  alpha,
                         "NumReplicates":  nrep,
