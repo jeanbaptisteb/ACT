@@ -17,12 +17,13 @@ The ACT method avoids losing control of type I error rates, which typically happ
 Note that there are other implementations of the ACT method, developed by García-Pérez et al. for R and Matlab, and available for download here: https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-014-0472-0/MediaObjects/13428_2014_472_MOESM1_ESM.zip
 
 ## Usage example
-The following example uses the ```ACT_I``` function available in the ```ACT.py``` file.
-The function takes 4 parameters:
-- observed: the contingency table to analyse (type: numpy array)
-- alpha: significance level. Should always be > 0 and < 0.5. Default 0.05
-- Rtype: type of residuals to use in the analysis. "ADJ" for adjusted residuals, "MC" for moment-corrected residuals. Default "ADJ".
-- nrep: number of replicates to generate during bootstrapping. Default 30000, as recommended by García-Pérez et al.
+The example below uses the ```ACT_I``` function available in the ```ACT.py``` file.
+The function takes 5 parameters:
+- `observed`: the contingency table to analyse (type: numpy array)
+- `alpha`: significance level. Should always be > 0 and < 0.5. Default 0.05
+- `Rtype`: type of residuals to use in the analysis. "ADJ" for adjusted residuals, "MC" for moment-corrected residuals. Default "ADJ".
+- `nrep`: number of replicates to generate during bootstrapping. Default 30000, as recommended by García-Pérez et al.
+- `seed`: seed state used to generate simulated tables. The purpose of this parameter is to make reproduction of the results easier. Default 0. *NB: this value is not present as a parameter in the R implementation of ACT.*
 
 
 ```
@@ -34,13 +35,14 @@ observed = np.array(
                   [ 7, 14, 25, 28, 46, 44],
                   [13, 19, 34, 45, 63, 72]]
                ) 
-result = ACT_I(observed, alpha=0.05 , Rtype="ADJ" , nrep=50000)
+result = ACT_I(observed, alpha=0.05 , Rtype="ADJ" , nrep=50000, seed=0)
 print(result)
 ```
 
 **Output:**
 ```
 {'Problem': 'Omnibus test of independence and ADJ residual analysis',
+ 'Seed': 0,
  'InputTable': array([[ 1,  7, 15, 12, 12, 14],
         [ 1, 16, 22, 31, 32, 27],
         [ 7, 14, 25, 28, 46, 44],
@@ -69,19 +71,19 @@ print(result)
         [ True, False, False, False, False, False],
         [False, False, False, False, False, False],
         [False, False, False, False, False, False]]),
- 'Cellwise_ExactTestSize': 0.0485925,
- 'Famwise_AlphaStar': 0.002155596168895355,
- 'Famwise_CriticalValue': 3.067912650623893,
+ 'Cellwise_ExactTestSize': 0.048640833333333335,
+ 'Famwise_AlphaStar': 0.002218134534779443,
+ 'Famwise_CriticalValue': 3.059355919579737,
  'Famwise_Significant': array([[False, False, False, False, False, False],
         [False, False, False, False, False, False],
         [False, False, False, False, False, False],
         [False, False, False, False, False, False]]),
- 'Famwise_ExactTestSize': 0.05002,
+ 'Famwise_ExactTestSize': 0.05,
  'OmnibusHypothesis': 'Not rejected'}
  ```
 ## Interpreting the output
 
-The function returns a dictionary, formatted according to the convention used in the R implementation of this method. 
+The function returns a dictionary, formatted according to the convention used in the R implementation of this method. (Except for the 'Seed' value, which is not available in the R version of ACT).
 
 **TL;DR**
 
@@ -90,6 +92,7 @@ For a standard use, the values of direct interest will generally be **Famwise_Si
 **Detailed explanation of the output**
 
 - Problem:  Description of the analysis, mentioning the type of residuals defined in the Rtype parameter.
+- Seed: seed state used to generate simulated tables. If exact reproduction of the results is needed, pass this value in the 'seed' parameter of the function when you call it again. *NB: this value is not present in the output of the R implementation of ACT.*
 - InputTable: The array passed in the 'observed'  parameter.
 - NominalTestSize: The alpha level defined in the 'alpha' parameter.
 - NumReplicates: Number of replicates generated, defined by the 'nrep' parameter.
@@ -114,7 +117,9 @@ Developed with Python 3.10.4. No tests have been performed against other version
 Numpy, scipy, and statsmodels are required, though the versions of these packages mentioned in the [requirements.txt](https://github.com/jeanbaptisteb/ACT/blob/main/requirements.txt) file are not set in stone. The code hasn't been tested against various versions of these packages -yet it is quite likely to work with more recent versions, and probably with some older versions as well.
 
 ## Limitations
-For the moment, the Python code available here only implements García-Pérez et al.'s method for testing independence, not the other tests they mention (homogeneity...).
+- For the moment, the Python code available here only implements García-Pérez et al.'s method for testing independence, not the other tests they mention (homogeneity...).
+
+- Python and R generate random numbers differently, which affects the generation of simulated tables during the "bootstrap step" of the ACT algorithm. As a consequence, if you want to reproduce *exactly* results originally obtained in R, you'll have to use the R implementation of ACT (along with the R's function `set.seed()` ). Conversely, you'll have to use this Python implementation to reproduce exactly results originally obtained with it, using the `seed` parameter of the function. **This is a concern only if you need exact reproduction of the results**, as the R and Python implementations should return extremely similar results. If you notice great discrepancies between the results of the R and Python implementations, try increasing the `nrep` number when calling the function (> 30,000). Otherwise, if increasing `nrep` does not solve the issue, you may [create a ticket](https://github.com/jeanbaptisteb/ACT/issues/new) describing your data and the parameters you used.
 
 ## Development roadmap
 
@@ -123,5 +128,6 @@ For the moment, the Python code available here only implements García-Pérez et
 - testing support for Python > 3.10.4
 - testing support for numpy > 1.22.0, scipy > 1.8.0, statsmodels > 0.13.2
 - making it available as a package on pypi
+- improving execution time
 - generating better formatted reports? (heatmaps, pdf, etc.)
 
