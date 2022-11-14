@@ -119,8 +119,6 @@ Numpy, scipy, and statsmodels are required, though the versions of these package
 ## Limitations
 - For the moment, the Python code available here only implements García-Pérez et al.'s method for testing independence, not the other tests they mention (homogeneity...).
 
-- Python and R generate random numbers differently, which affects the generation of simulated tables during the "bootstrap step" of the ACT algorithm. As a consequence, if you want to reproduce *exactly* results originally obtained in R, you'll have to use the R implementation of ACT (along with the R's function `set.seed()` ). Conversely, you'll have to use this Python implementation to reproduce exactly results originally obtained with it, using the `seed` parameter of the function. **This is a concern only if you need exact reproduction of the results**, as the R and Python implementations should return extremely similar results. If you notice great discrepancies between the results of the R and Python implementations, try increasing the `nrep` number when calling the function (> 30,000). Otherwise, if increasing `nrep` does not solve the issue, you may [report the issue](https://github.com/jeanbaptisteb/ACT/issues/new) describing your data and the parameters you used.
-
 ## Development roadmap
 
 - adding support for tests of homogeneity and tests of fit
@@ -130,4 +128,4 @@ Numpy, scipy, and statsmodels are required, though the versions of these package
 - making it available as a package on pypi
 - improving execution time
 - generating better formatted reports? (heatmaps, pdf, etc.)
-
+- make reproduction of results easier between R and Python
