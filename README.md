@@ -1,5 +1,8 @@
 # ACT: Analysis of Contingency Tables
-The purpose of this code is to offer a statistical method to **analyze contingency tables and their residuals**, with a bootstrap correction for multiple testing.
+The purpose of this code is to offer a statistical method to **analyze contingency tables and their residuals**, with a bootstrap correction for multiple testing. 
+
+**This version is still under development**, so any use in production should be tested against its original implementation in R (available for download [here](https://static-content.springer.com/esm/art%3A10.3758%2Fs13428-014-0472-0/MediaObjects/13428_2014_472_MOESM1_ESM.zip)).
+
 
 ##### Table of Contents  
 - [Motivation](#introduction-and-motivation)  
@@ -87,7 +90,7 @@ The function returns a dictionary, formatted according to the convention used in
 
 **TL;DR**
 
-For a standard use, the values of direct interest will generally be **Famwise_Significant** and **OmnibusHypothesis**. The **Famwise_Significant** value is an array, showing which cells have significant residuals (`True`)  or non-significant residuals (`False`). The  **OmnibusHypothesis** value shows if we can reject (or not) the null hypothesis. The example above shows that none of the residuals is significant, and that the omnibus test is non-significant (so we cannot reject the null hypothesis).
+For a standard use, the values of direct interest will generally be **Cellwise_Significant**, **OmnibusHypothesis**, and **Famwise_Significant**. The **Cellwise_Significant** value is an array, showing which cells have significant residuals (`True`)  or non-significant residuals (`False`). The  **OmnibusHypothesis** value shows if we can reject (or not) the null hypothesis (based on if any **Famwise_Significant** is `True`). The example above shows that none of the residuals is significant, so the omnibus test is non-significant (so we cannot reject the null hypothesis).
 
 **Detailed explanation of the output**
 
@@ -117,10 +120,12 @@ Developed with Python 3.10.4. No tests have been performed against other version
 Numpy, scipy, and statsmodels are required, though the versions of these packages mentioned in the [requirements.txt](https://github.com/jeanbaptisteb/ACT/blob/main/requirements.txt) file are not set in stone. The code hasn't been tested against various versions of these packages -yet it is quite likely to work with more recent versions, and probably with some older versions as well.
 
 ## Limitations
+- This is a beta version, which still requires more extensive testing againt García-Pérez et al. implementation in R.
 - For the moment, the Python code available here only implements García-Pérez et al.'s method for testing independence, not the other tests they mention (homogeneity...).
 
 ## Development roadmap
 
+- testing more extensively against García-Pérez et al. implementation in R
 - adding support for tests of homogeneity and tests of fit
 - improving documentation
 - testing support for Python > 3.10.4
